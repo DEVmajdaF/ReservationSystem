@@ -1,0 +1,100 @@
+﻿@model IEnumerable<ReservationSystem.Models.ReservationViewModel>
+
+<h1>Liste Des Reservation d'aujourd'hui </h1>
+
+@*<p>Search By Date, users, Type de reservation, Status</p>*@
+@*<partial name="_navside" />*@
+<form method="post">
+    
+    <input type="date"  name="datecalendar" />
+    <input type="submit" />
+</form>
+<div class="d-flex justify-content-center">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.date)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.cause)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.reservationName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.status)
+                </th>
+              
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.date)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.cause)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.reservationName)
+                </td>
+                <td>
+                    @if (item.status == true)
+                    {
+                             <p>Approved</p>
+                    }
+                    else if (item.status == false)
+                    {
+                             <p>Rejected</p>
+                     }
+                    else if (item.status == null)
+                    {
+                             <p>InProcess</p>
+                    }
+                    
+
+                </td>
+                <td>
+                    <form style="display:inline;" method="post" asp-action="postdata">
+                        <input type="hidden" name="Id" value="@item.Id" />
+                        <input type="hidden" name="status" value="true" />
+                        <button type="submit" class="btn btn-xs btn-primary">Approved</button>
+                    </form>
+                    <form style="display:inline;" method="post" asp-action="postdata">
+                        <input type="hidden" name="Id" value="@item.Id" />
+                        <input type="hidden" name="status" value="false" />
+                        <button type="submit" class="btn btn-xs btn-danger">rejected</button>
+                    </form>
+                </td>
+
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
